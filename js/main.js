@@ -38,7 +38,7 @@ function W2SH1(word) {
 }
 
 slider.querySelector('#sliderRange').addEventListener("change", (event) => {
-    document.querySelector(".numberDifficulty").innerHTML = 11-slider.querySelector('#sliderRange').value
+    document.querySelector(".numberDifficulty").innerHTML = slider.querySelector('#sliderRange').value
 })
 
 function toString(target){
@@ -63,7 +63,7 @@ function guess(letter){
     let ul = u.length
     console.log(u.length)
     let b = toArray(currentWord)
-    if(u.length){
+    if(currentWord.includes(letter)){
         for (let i = 0; i < u.length; i++){
             b[u[i]] = currentWord[u[i]]
             console.log(b)
