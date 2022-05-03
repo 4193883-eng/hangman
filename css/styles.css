@@ -22,6 +22,16 @@ canvas{
     color: var(--white);
 }
 
+.hint{
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    border-radius: 15px;
+    padding: 7px;
+    background: var(--secondary-color);
+    color: var(--white);
+}
+
 .h1{
     word-wrap: break-word;
     text-align: center;

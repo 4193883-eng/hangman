@@ -34,7 +34,7 @@ function whereContains(checked, target) {
     return result
 }
 
-button.addEventListener('click', word)
+button.addEventListener('click', buttonHandler)
 
 function W2SH1(word) {
     h1.innerHTML = ""
