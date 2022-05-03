@@ -12,10 +12,15 @@ let word = () => {
     xmlHttpReq.send(null);
     let result = JSON.parse(xmlHttpReq.responseText)[0]
     currentWord = result
-    lives = 0
     W2SH1(result)
-    h1.style.letterSpacing = "1ch"
     return result
+}
+
+function buttonHandler(){
+    h1.style.letterSpacing = "1ch"
+    lives = 0
+    drawSVG(lives)
+    word()
 }
 
 function whereContains(checked, target) {
@@ -62,7 +67,7 @@ function guess(letter){
     let u = whereContains(currentWord, letter)
     let ul = u.length
     console.log(u.length)
-    let b = toArray(currentWord)
+    let b = toArray(h1.innerText)
     if(currentWord.includes(letter)){
         for (let i = 0; i < u.length; i++){
             b[u[i]] = currentWord[u[i]]
@@ -73,6 +78,14 @@ function guess(letter){
         drawSVG(lives)
     }
     h1.innerHTML = toString(b)
+    if (lives == 10){
+        h1.style.letter = "initial"
+        h1.innerText = "You lose!"
+    }
+    if (h1.innerText == currentWord){
+        h1.style.letter = "initial"
+        h1.innerText == "You win! The word was:" + currentWord
+    }
 }
 
 function createKey(key) {
