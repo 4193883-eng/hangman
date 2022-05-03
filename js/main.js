@@ -20,6 +20,7 @@ function buttonHandler(){
     h1.style.letterSpacing = "1ch"
     lives = 0
     drawSVG(lives)
+    drawSVG("clear")
     word()
 }
 
