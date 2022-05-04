@@ -80,11 +80,12 @@ function toArray(target){
 }
 
 function setScore(expression, number){
-    
+    score = localStorage.getItem("score")
+    if (score == null) score = 0
     if (expression == "-"){
-        score -= number
+        score = score - number
     }else if (expression == "-"){
-        score += number
+        score = score + number
     }
 
 
