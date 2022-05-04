@@ -2,9 +2,20 @@ const button = document.querySelector(".button")
 const h1 = document.querySelector(".h1")
 const keys = document.querySelector(".keys")
 const slider = document.querySelector(".slider")
+const hint = document.querySelector(".hint")
+const scoreDisplay = document.querySelector(".scoreDisplay")
 let currentWord
 let lives = 0
-let score = 0
+let score = localStorage.getItem("score")
+let previous = 0
+function onhint(){
+    let result = parseInt(prompt("Which letter do you want to reveal? (type number)"))
+    console.log(parseInt(result)-1)
+    guess(currentWord[parseInt(result)-1])
+    previous = parseInt(result)-1
+}
+
+hint.addEventListener('click', onhint)
 
 let word = () => {
     let xmlHttpReq = new XMLHttpRequest();
@@ -22,6 +33,11 @@ function buttonHandler(){
     drawSVG(lives)
     drawSVG("clear")
     word()
+    document.querySelectorAll("button").forEach((e)=>{
+        e.disabled = false
+        e.style.cursor = "pointer"
+        e.style.backgroundColor = "#007EA7"
+    })
 }
 
 function whereContains(checked, target) {
@@ -63,10 +79,29 @@ function toArray(target){
     return result
 }
 
+function setScore(expression, number){
+    
+    if (expression == "-"){
+        score -= number
+    }else if (expression == "-"){
+        score += number
+    }
+
+
+    if (score < 1){
+        scoreDisplay.style.color = "#DB162F"
+    }else{
+        scoreDisplay.style.color = "#fff"
+    }
+    localStorage.setItem("score", score)
+    scoreDisplay.innerText = score
+}
+
 function guess(letter){
     console.log(whereContains(currentWord, letter).length)
     let u = whereContains(currentWord, letter)
     let ul = u.length
+    let result = ""
     console.log(u.length)
     let b = toArray(h1.innerText)
     if(currentWord.includes(letter)){
@@ -74,19 +109,23 @@ function guess(letter){
             b[u[i]] = currentWord[u[i]]
             console.log(b)
         }
+        result = "succes"
     }else{
         lives++
         drawSVG(lives)
+        result = "fail"
     }
     h1.innerHTML = toString(b)
     if (lives == 10){
-        h1.style.letter = "initial"
-        h1.innerText = "You lose!"
+        h1.style.letterSpacing = "initial"
+        h1.innerText = "You lose! The word was:"+ currentWord
     }
     if (h1.innerText == currentWord){
-        h1.style.letter = "initial"
-        h1.innerText == "You win! The word was:" + currentWord
+        h1.style.letterSpacing = "initial"
+        h1.innerText = "You win! The word was:" + currentWord
+        score += 5
     }
+    return result
 }
 
 function createKey(key) {
@@ -95,6 +134,10 @@ function createKey(key) {
     e.removeAttribute('style')
     e.addEventListener("click", () => {
         guess(key.toLowerCase())
+        e.disabled = true
+        e.style.cursor = "not-allowed"
+        e.style.backgroundColor = "#00A7E1"
+        
     })
     keys.appendChild(e)
 }
@@ -106,6 +149,7 @@ function init() {
         createKey(alphabet[i])
         console.log(alphabet[i])
     }
+    setScore("set", 0)
     document.querySelector(".numberDifficulty").innerHTML = slider.querySelector('#sliderRange').value
 }
 function drawSVG(number) {

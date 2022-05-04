@@ -6,41 +6,76 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <title>Stickle!</title>
 </head>
 
 <body>
     <div class="navbar">
-        <span>Stickle!</span> <div class="slider">Difficulty:<input type="range" min="3" max="8" value="4" class="sliderInner" id="sliderRange"> <span class="numberDifficulty"></span></div>
-        <div class="coinScore"><img class="coin" src="./img/coin.gif" alt="coin"> <span>0</span></div>
+        <span>Stickle!</span>
+        <div class="slider">Difficulty:<input type="range" min="3" max="8" value="4" class="sliderInner"
+                id="sliderRange"> <span class="numberDifficulty"></span></div>
+        <div class="coinScore"><img class="coin" src="./img/coin.gif" alt="coin"> <span class="scoreDisplay">0</span>
+        </div>
     </div>
     <div class="container">
         <h1 class="h1">Press button "New game"</h1>
         <button class="button">New game</button>
         <button class="hint">Reveal hint!</button>
-        <svg id="erXPkmy24351" class="stickman" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 640 640" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-            <line id="a1" x1="-105.524625" y1="0" x2="105.524625" y2="0" transform="translate(153.490364 509.807281)"
-                fill="none" stroke="#007EA7" stroke-width="3" style="display: none;"/>
-            <line id="a2" x1="0" y1="173.361884" x2="0" y2="-173.361884" transform="translate(143.897216 336.445397)"
-                fill="none" stroke="#007EA7" stroke-width="3" style="display: none;"/>
-            <line id="a3" x1="-88.051392" y1="0" x2="88.051392" y2="0" transform="translate(231.948608 163.083513)" fill="none"
-                stroke="#007EA7" stroke-width="3" style="display: none;"/>
-            <line id="a4" x1="0" y1="-18.27587" x2="0" y2="18.27587" transform="translate(320 181.359383)" fill="none"
-                stroke="#007EA7" stroke-width="3" style="display: none;"/>
-            <ellipse id="a5" rx="35.094388" ry="35.094388" transform="translate(320 234.729641)" fill="#00A7E1"
-                stroke-width="0" style="display: none;"/>
-            <line id="a6" x1="0" y1="-38.808701" x2="0" y2="38.808701" transform="translate(320 308.63273)" fill="none"
-                stroke="#007EA7" stroke-width="3" style="display: none;"/>
-            <line id="a7" x1="-28.24378" y1="-19.236067" x2="28.24378" y2="19.236067"
-                transform="translate(348.24378 300.763933)" fill="none" stroke="#007EA7" stroke-width="3" style="display: none;"/>
-            <line id="a8" x1="24.68681" y1="-19.236067" x2="-24.686811" y2="19.236067"
-                transform="translate(295.31319 300.763933)" fill="none" stroke="#007EA7" stroke-width="3" style="display: none;"/>
-            <line id="a9" x1="-14.12189" y1="-28.962021" x2="14.12189" y2="28.962021"
-                transform="translate(334.12189 376.403453)" fill="none" stroke="#007EA7" stroke-width="3" style="display: none;"/>
-            <line id="a10" x1="12.343405" y1="-28.962021" x2="-12.343405" y2="28.962021"
-                transform="translate(307.656595 376.403453)" fill="none" stroke="#007EA7" stroke-width="3" style="display: none;"/>
-        </svg>
+        <div class="svg">
+            <svg class="svgbg" id="eabSKORUfCA1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 640 640" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+                <line x1="-105.524625" y1="0" x2="105.524625" y2="0" transform="translate(153.490356 509.807281)"
+                    fill="none" stroke="#aaa" stroke-width="3" />
+                <line x1="0" y1="173.361884" x2="0" y2="-173.361884" transform="translate(143.897217 336.445404)"
+                    fill="none" stroke="#aaa" stroke-width="3" />
+                <line x1="-88.051392" y1="0" x2="88.051392" y2="0" transform="translate(231.948608 163.083511)"
+                    fill="none" stroke="#aaa" stroke-width="3" />
+                <line x1="0" y1="-18.27587" x2="0" y2="18.27587" transform="translate(320 181.35939)" fill="none"
+                    stroke="#aaa" stroke-width="3" />
+                <ellipse rx="35.0944" ry="35.0944" transform="translate(320 234.729645)" fill="#aaa" stroke-width="0" />
+                <line x1="0" y1="-38.808701" x2="0" y2="38.808701" transform="translate(320 308.632721)" fill="none"
+                    stroke="#aaa" stroke-width="3" />
+                <line x1="-28.24378" y1="-19.236067" x2="28.24378" y2="19.236067"
+                    transform="translate(348.243774 300.763947)" fill="none" stroke="#aaa" stroke-width="3" />
+                <line x1="24.68681" y1="-19.236067" x2="-24.686811" y2="19.236067"
+                    transform="translate(295.313202 300.763947)" fill="none" stroke="#aaa" stroke-width="3" />
+                <line x1="-14.12189" y1="-28.962021" x2="14.12189" y2="28.962021"
+                    transform="translate(334.121887 376.403442)" fill="none" stroke="#aaa" stroke-width="3" />
+                <line x1="12.343405" y1="-28.962021" x2="-12.343405" y2="28.962021"
+                    transform="translate(307.656586 376.403442)" fill="none" stroke="#aaa" stroke-width="3" />
+            </svg>
+            <svg id="erXPkmy24351" class="stickman" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 640" shape-rendering="geometricPrecision"
+                text-rendering="geometricPrecision">
+                <line id="a1" x1="-105.524625" y1="0" x2="105.524625" y2="0"
+                    transform="translate(153.490364 509.807281)" fill="none" stroke="#007EA7" stroke-width="3"
+                    style="display: none;" />
+                <line id="a2" x1="0" y1="173.361884" x2="0" y2="-173.361884"
+                    transform="translate(143.897216 336.445397)" fill="none" stroke="#007EA7" stroke-width="3"
+                    style="display: none;" />
+                <line id="a3" x1="-88.051392" y1="0" x2="88.051392" y2="0" transform="translate(231.948608 163.083513)"
+                    fill="none" stroke="#007EA7" stroke-width="3" style="display: none;" />
+                <line id="a4" x1="0" y1="-18.27587" x2="0" y2="18.27587" transform="translate(320 181.359383)"
+                    fill="none" stroke="#007EA7" stroke-width="3" style="display: none;" />
+                <ellipse id="a5" rx="35.094388" ry="35.094388" transform="translate(320 234.729641)" fill="#00A7E1"
+                    stroke-width="0" style="display: none;" />
+                <line id="a6" x1="0" y1="-38.808701" x2="0" y2="38.808701" transform="translate(320 308.63273)"
+                    fill="none" stroke="#007EA7" stroke-width="3" style="display: none;" />
+                <line id="a7" x1="-28.24378" y1="-19.236067" x2="28.24378" y2="19.236067"
+                    transform="translate(348.24378 300.763933)" fill="none" stroke="#007EA7" stroke-width="3"
+                    style="display: none;" />
+                <line id="a8" x1="24.68681" y1="-19.236067" x2="-24.686811" y2="19.236067"
+                    transform="translate(295.31319 300.763933)" fill="none" stroke="#007EA7" stroke-width="3"
+                    style="display: none;" />
+                <line id="a9" x1="-14.12189" y1="-28.962021" x2="14.12189" y2="28.962021"
+                    transform="translate(334.12189 376.403453)" fill="none" stroke="#007EA7" stroke-width="3"
+                    style="display: none;" />
+                <line id="a10" x1="12.343405" y1="-28.962021" x2="-12.343405" y2="28.962021"
+                    transform="translate(307.656595 376.403453)" fill="none" stroke="#007EA7" stroke-width="3"
+                    style="display: none;" />
+            </svg>
+        </div>
         <div class="keys"><button class="key" style="display: none;"></button></div>
     </div>
     <script src="./js/main.js"></script>
