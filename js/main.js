@@ -4,15 +4,24 @@ const keys = document.querySelector(".keys")
 const slider = document.querySelector(".slider")
 const hint = document.querySelector(".hint")
 const scoreDisplay = document.querySelector(".scoreDisplay")
-let currentWord
+let currentWord = ""
 let lives = 0
 let score = localStorage.getItem("score")
 let previous = 0
+let keysStates = {}
 function onhint(){
-    let result = parseInt(prompt("Which letter do you want to reveal? (type number)"))
-    console.log(parseInt(result)-1)
-    guess(currentWord[parseInt(result)-1])
-    previous = parseInt(result)-1
+    let result = parseInt(prompt("Which letter do you want to reveal? Will take 5 coins! (type number)"))
+    if (result == false){
+        return
+    }
+    if (score < 5){
+        alert("Not enough money")
+        return
+    }else if (score > 5){
+        setScore("-", 5)
+        guess(currentWord[parseInt(result)-1])
+        previous = parseInt(result)-1
+    }
 }
 
 hint.addEventListener('click', onhint)
@@ -23,6 +32,7 @@ let word = () => {
     xmlHttpReq.send(null);
     let result = JSON.parse(xmlHttpReq.responseText)[0]
     currentWord = result
+    localStorage.setItem('currentWord', result)
     W2SH1(result)
     return result
 }
@@ -33,6 +43,7 @@ function buttonHandler(){
     drawSVG(lives)
     drawSVG("clear")
     word()
+    saveLS()
     document.querySelectorAll("button").forEach((e)=>{
         e.disabled = false
         e.style.cursor = "pointer"
@@ -80,35 +91,31 @@ function toArray(target){
 }
 
 function setScore(expression, number){
-    score = localStorage.getItem("score")
+    score = Number(score)
     if (score == null) score = 0
     if (expression == "-"){
         score = score - number
-    }else if (expression == "-"){
+    }else if (expression == "+"){
         score = score + number
     }
-
-
     if (score < 1){
         scoreDisplay.style.color = "#DB162F"
     }else{
         scoreDisplay.style.color = "#fff"
     }
-    localStorage.setItem("score", score)
-    scoreDisplay.innerText = score
+    localStorage.setItem("score", String(score))
+    scoreDisplay.innerHTML = score
 }
 
 function guess(letter){
-    console.log(whereContains(currentWord, letter).length)
+    currentWord = localStorage.getItem("currentWord")
     let u = whereContains(currentWord, letter)
-    let ul = u.length
     let result = ""
     console.log(u.length)
     let b = toArray(h1.innerText)
     if(currentWord.includes(letter)){
         for (let i = 0; i < u.length; i++){
             b[u[i]] = currentWord[u[i]]
-            console.log(b)
         }
         result = "succes"
     }else{
@@ -124,31 +131,74 @@ function guess(letter){
     if (h1.innerText == currentWord){
         h1.style.letterSpacing = "initial"
         h1.innerText = "You win! The word was:" + currentWord
-        score += 5
+        setScore("+", 5)
     }
+    saveLS()
     return result
+}
+
+function loadLS(){
+    currentWord = localStorage.getItem("currentWord")
+    lives = localStorage.getItem("damage")
+    h1.innerText = localStorage.getItem("progress")
+    keysStates = JSON.parse(localStorage.getItem("keystates"))
+    drawSVG(lives)
+    h1.style.letterSpacing = '1ch'
+    if (currentWord=undefined){
+        word()
+        saveLS()
+        h1.innerText = 'Press button "New game"'
+        let _alphabet = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+        let alphabet = _alphabet.split(' ')
+        for (let i = 0; i < alphabet.length; i++) {
+            keysStates[alphabet[i].toLowerCase()] = document.querySelector('.'+String(alphabet[i].toLowerCase())).disabled
+        }
+        
+    }
+
+}
+
+function saveLS(){
+    localStorage.setItem("currentWord", currentWord)
+    localStorage.setItem("damage", lives)
+    if (currentWord == undefined) currentWord = "not yet known"
+    localStorage.setItem("progress", h1.innerText)
+    keysStates = {}
+    let _alphabet = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+    let alphabet = _alphabet.split(' ')
+    for (let i = 0; i < alphabet.length; i++) {
+        keysStates[alphabet[i].toLowerCase()] = document.querySelector('.'+String(alphabet[i].toLowerCase())).disabled
+    }
+    localStorage.setItem("keystates", JSON.stringify(keysStates))
 }
 
 function createKey(key) {
     let e = keys.querySelector('.key').cloneNode(true)
     e.innerHTML = key
+    e.classList.add(key.toLowerCase())
     e.removeAttribute('style')
+    if (keysStates[key.toLowerCase()]){
+        e.disabled = true
+        e.style.cursor = "not-allowed"
+        e.style.backgroundColor = "#00A7E1"
+    }
     e.addEventListener("click", () => {
         guess(key.toLowerCase())
         e.disabled = true
         e.style.cursor = "not-allowed"
         e.style.backgroundColor = "#00A7E1"
-        
+        saveLS()
     })
     keys.appendChild(e)
 }
 
 function init() {
+    score = localStorage.getItem("score")
     let alphabetDONTWORK = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
     let alphabet = alphabetDONTWORK.split(' ')
+    loadLS()
     for (let i = 0; i < alphabet.length; i++) {
         createKey(alphabet[i])
-        console.log(alphabet[i])
     }
     setScore("set", 0)
     document.querySelector(".numberDifficulty").innerHTML = slider.querySelector('#sliderRange').value
