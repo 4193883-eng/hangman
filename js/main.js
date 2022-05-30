@@ -217,7 +217,7 @@ function init() {
         alert('If there isn\'t any api keys, there wouldn\'t be a possibility to see the defenition! (If you want to enter one, please restart the page)')
         enabledDefs = false
     }
-    if (localStorage.getItem('score') == null){
+    if (localStorage.getItem('keystates') == null){
         localStorage.setItem('score', 0)
         localStorage.setItem('currentWord', 'not yet')
         localStorage.setItem('keystates', '{"a":false,"b":false,"c":false,"d":false,"e":false,"f":false,"g":false,"h":false,"i":false,"j":false,"k":false,"l":false,"m":false,"n":false,"o":false,"p":false,"q":false,"r":false,"s":false,"t":false,"u":false,"v":false,"w":false,"x":false,"y":false,"z":false}')
