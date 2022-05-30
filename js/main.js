@@ -213,7 +213,7 @@ function createKey(key) {
 }
 
 function init() {
-    if (apiKEY == 'a') {
+    if (apiKEY == '') {
         alert('If there isn\'t any api keys, there wouldn\'t be a possibility to see the defenition! (If you want to enter one, please restart the page)')
         enabledDefs = false
     }
