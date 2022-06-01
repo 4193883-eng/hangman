@@ -40,6 +40,7 @@ let word = () => {
     localStorage.setItem('currentWord', result)
     W2SH1(result)
     return result
+    saveLS()
 }
 
 function buttonHandler(){
@@ -48,12 +49,12 @@ function buttonHandler(){
     drawSVG(lives)
     drawSVG("clear")
     word()
-    saveLS()
     document.querySelectorAll("button").forEach((e)=>{
         e.disabled = false
         e.style.cursor = "pointer"
         e.style.backgroundColor = "#007EA7"
     })
+    saveLS()
 }
 
 function whereContains(checked, target) {
@@ -218,6 +219,7 @@ function init() {
         enabledDefs = false
     }
     if (localStorage.getItem('keystates') == null){
+        buttonHandler()
         localStorage.setItem('score', 0)
         localStorage.setItem('currentWord', 'not yet')
         localStorage.setItem('keystates', '{"a":false,"b":false,"c":false,"d":false,"e":false,"f":false,"g":false,"h":false,"i":false,"j":false,"k":false,"l":false,"m":false,"n":false,"o":false,"p":false,"q":false,"r":false,"s":false,"t":false,"u":false,"v":false,"w":false,"x":false,"y":false,"z":false}')
@@ -226,10 +228,10 @@ function init() {
     let alphabetDONTWORK = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
     let alphabet = alphabetDONTWORK.split(' ')
     loadLS()
+    currentWord = localStorage.getItem('currentWord')
     for (let i = 0; i < alphabet.length; i++) {
         createKey(alphabet[i])
     }
-    setScore("set", 0)
     document.querySelector(".numberDifficulty").innerHTML = slider.querySelector('#sliderRange').value
 }
 function drawSVG(number) {
