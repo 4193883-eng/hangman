@@ -214,14 +214,8 @@ function createKey(key) {
 }
 
 function init() {
-    if (apiKEY == '') {
-        alert('If there isn\'t any api keys, there wouldn\'t be a possibility to see the defenition! (If you want to enter one, please restart the page)')
-        enabledDefs = false
-    }
     if (localStorage.getItem('keystates') == null){
-        buttonHandler()
         localStorage.setItem('score', 0)
-        localStorage.setItem('currentWord', 'not yet')
         localStorage.setItem('keystates', '{"a":false,"b":false,"c":false,"d":false,"e":false,"f":false,"g":false,"h":false,"i":false,"j":false,"k":false,"l":false,"m":false,"n":false,"o":false,"p":false,"q":false,"r":false,"s":false,"t":false,"u":false,"v":false,"w":false,"x":false,"y":false,"z":false}')
         localStorage.setItem('progress', 'Press button "New game" to continue')
     }    
@@ -233,6 +227,10 @@ function init() {
         createKey(alphabet[i])
     }
     document.querySelector(".numberDifficulty").innerHTML = slider.querySelector('#sliderRange').value
+    if (apiKEY == '') {
+        alert('If there isn\'t any api keys, there wouldn\'t be a possibility to see the defenition! (If you want to enter one, please restart the page)')
+        enabledDefs = false
+    }
 }
 function drawSVG(number) {
     let a1 = document.querySelector("#a1")
