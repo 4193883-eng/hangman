@@ -4,6 +4,9 @@ const keys = document.querySelector(".keys")
 const slider = document.querySelector(".slider")
 const hint = document.querySelector(".hint")
 const scoreDisplay = document.querySelector(".scoreDisplay")
+const apiKEY = prompt("Please enter your Wordnik API key")
+const defButton = document.querySelector(".hintwdef")
+let enabledDefs = true
 let currentWord = ""
 let lives = 0
 let score = localStorage.getItem("score")
@@ -22,9 +25,11 @@ function onhint(){
         guess(currentWord[parseInt(result)-1])
         previous = parseInt(result)-1
     }
+    saveLS()
 }
 
 hint.addEventListener('click', onhint)
+defButton.addEventListener('click', defenition)
 
 let word = () => {
     let xmlHttpReq = new XMLHttpRequest();
@@ -35,6 +40,7 @@ let word = () => {
     localStorage.setItem('currentWord', result)
     W2SH1(result)
     return result
+    saveLS()
 }
 
 function buttonHandler(){
@@ -43,12 +49,12 @@ function buttonHandler(){
     drawSVG(lives)
     drawSVG("clear")
     word()
-    saveLS()
     document.querySelectorAll("button").forEach((e)=>{
         e.disabled = false
         e.style.cursor = "pointer"
         e.style.backgroundColor = "#007EA7"
     })
+    saveLS()
 }
 
 function whereContains(checked, target) {
@@ -105,6 +111,7 @@ function setScore(expression, number){
     }
     localStorage.setItem("score", String(score))
     scoreDisplay.innerHTML = score
+    saveLS()
 }
 
 function guess(letter){
@@ -172,6 +179,20 @@ function saveLS(){
     localStorage.setItem("keystates", JSON.stringify(keysStates))
 }
 
+function defenition(){
+    currentWord = localStorage.getItem("currentWord")
+    if (score < 10) return alert("Score must be not less than 10")
+    if (confirm('Are you sure you want to get the defenition (Will take 10 coins)')){
+        let req = new XMLHttpRequest();
+        req.open('GET', `https://api.wordnik.com/v4/word.json/${currentWord}/definitions?limit=200&includeRelated=false&useCanonical=false&includeTags=false&sourceDictionaries=century&api_key=${apiKEY}`, 0)
+        req.send(0)
+        let result = JSON.parse(req.responseText)[0].text
+        setScore('-', 10)
+        alert(result)
+    }
+    saveLS()
+}
+
 function createKey(key) {
     let e = keys.querySelector('.key').cloneNode(true)
     e.innerHTML = key
@@ -193,21 +214,23 @@ function createKey(key) {
 }
 
 function init() {
-    if (localStorage.getItem('score') == null){
+    if (localStorage.getItem('keystates') == null){
         localStorage.setItem('score', 0)
-        localStorage.setItem('currentWord', 'not yet')
         localStorage.setItem('keystates', '{"a":false,"b":false,"c":false,"d":false,"e":false,"f":false,"g":false,"h":false,"i":false,"j":false,"k":false,"l":false,"m":false,"n":false,"o":false,"p":false,"q":false,"r":false,"s":false,"t":false,"u":false,"v":false,"w":false,"x":false,"y":false,"z":false}')
         localStorage.setItem('progress', 'Press button "New game" to continue')
     }    
-    score = localStorage.getItem("score")
     let alphabetDONTWORK = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
     let alphabet = alphabetDONTWORK.split(' ')
     loadLS()
+    currentWord = localStorage.getItem('currentWord')
     for (let i = 0; i < alphabet.length; i++) {
         createKey(alphabet[i])
     }
-    setScore("set", 0)
     document.querySelector(".numberDifficulty").innerHTML = slider.querySelector('#sliderRange').value
+    if (apiKEY == '') {
+        alert('If there isn\'t any api keys, there wouldn\'t be a possibility to see the defenition! (If you want to enter one, please restart the page)')
+        enabledDefs = false
+    }
 }
 function drawSVG(number) {
     let a1 = document.querySelector("#a1")
